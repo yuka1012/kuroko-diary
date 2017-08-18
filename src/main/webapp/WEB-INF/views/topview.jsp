@@ -24,6 +24,6 @@
 		<input type="submit" value="開始">
 	</form:form>
 </form:form>
-<a href="${pageContext.request.contextPath }/">新規登録</a>
+<a href="${pageContext.request.contextPath }/registration">新規登録</a>
 </body>
 </html>
