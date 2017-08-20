@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -40,13 +41,19 @@ public class UserRepository {
 	public User findByMailAddress(String mailAddress){
 		SqlParameterSource param=new MapSqlParameterSource().addValue("mailAddress", mailAddress);
 		String sql="select id,name,mail_address,password from users where mail_address=:mailAddress";
-		User user=template.queryForObject(sql, param, userRowMapper);
 		
+		User user=template.queryForObject(sql, param, userRowMapper);
 		return user;
 		
 		}
 	
+	/**
+	 * ユーザー情報をデータベースに登録するメソッド.
+	 * @param user ユーザー
+	 */
 	public void save(User user){
-		
+		SqlParameterSource param=new BeanPropertySqlParameterSource(user);
+		String sql="insert into users(name,mail_address,password values(:name,:mail_address,:password)";
+		template.update(sql, param);
 	}
 }

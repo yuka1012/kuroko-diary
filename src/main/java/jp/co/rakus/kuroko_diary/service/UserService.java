@@ -16,7 +16,20 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	/**
+	 * メールアドレスでユーザーを検索するメソッド.
+	 * @param mailAddress
+	 * @return ユーザー
+	 */
 	public User findByMailAddress(String mailAddress){
 		return userRepository.findByMailAddress(mailAddress);
+	}
+	
+	/**
+	 * ユーザー情報を登録するメソッド.
+	 * @param user ユーザー
+	 */
+	public void save(User user) {
+		userRepository.save(user);
 	}
 }

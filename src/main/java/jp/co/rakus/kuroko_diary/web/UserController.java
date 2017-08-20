@@ -39,4 +39,19 @@ public class UserController {
 		return "registration";
 	}
 	
+	@RequestMapping("newuser")
+	public String newuser(UserForm form) {
+		User user=userService.findByMailAddress(form.getMailAddress());
+		if(user!=null) {
+			//TODO(null以外の処理)
+			return "redirect:registration";
+		}
+		user.setName(form.getName());
+		user.setMailAddress(form.getMailAddress());
+		user.setPassword(form.getPasssword());
+		
+		userService.save(user);
+		return "redirect:/login";
+	}
+	
 }
